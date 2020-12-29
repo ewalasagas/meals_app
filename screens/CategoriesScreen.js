@@ -1,5 +1,12 @@
 import React from 'react';
-import { StyleSheet, Text, FlatList, View, Button, TouchableOpacity } from 'react-native';
+import { StyleSheet, 
+    Text, 
+    FlatList, 
+    View, 
+    Button, 
+    TouchableOpacity,
+    Platform
+} from 'react-native';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import { CATEGORIES } from '../data/dummy-data';
 import Color from '../constants/Colors';
@@ -10,7 +17,9 @@ const CategoriesScreen = props => {
             <TouchableOpacity
                 style={styles.gridItem}
                 onPress={() => {
-                    props.navigation.navigate({ routeName: 'CategoryMeals' })
+                    props.navigation.navigate({ routeName: 'CategoryMeals', params: {
+                        categoryId: itemData.item.id
+                    } })
                 }}>
                 <View>
                     <Text>{itemData.item.title}</Text>
@@ -31,8 +40,9 @@ const CategoriesScreen = props => {
 CategoriesScreen.navigationOptions = {
     headerTitle: 'Meal Categories',
     headerStyle: {
-        backgroundColor: Color.primaryColor,
-    }
+        backgroundColor: Platform.OS === 'android' ? Color.primaryColor : '',
+    },
+    headerTintColor: Platform.OS === 'android' ? 'white': Color.primaryColor,
 };
 
 const styles = StyleSheet.create({
